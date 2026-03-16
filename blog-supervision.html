@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veille : Supervision Réseau - Portfolio</title>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@300;400;600&family=Fira+Code:wght@400;500&family=Orbitron:wght@700&display=swap');
+    </style>
+    
+    <link rel="stylesheet" href="CSS/blog-supervision.css">
+</head>
+<body>
+
+    <div class="progress-container"><div class="progress-bar" id="myBar"></div></div>
+
+    <header class="article-hero">
+        <div class="hero-content">
+            <span class="category-tag">Veille Technologique #02</span>
+            <h1 class="article-title">Outils open source vs solutions propriétaires : quel avenir pour la supervision ?</h1>
+            <p class="article-meta">RESEAUX & INFRASTRUCTURE • 2026</p>
+        </div>
+    </header>
+
+    <main class="article-container">
+        
+        <section class="intro-section reveal-left">
+            <p class="lead-text">
+                <span class="dropcap">L</span>es réseaux d’entreprise sont devenus des systèmes nerveux complexes reliant sites distants, datacenters, cloud et télétravailleurs. La moindre panne peut impacter directement l’activité. Dans ce contexte, la supervision réseau est passée d'un simple outil technique à une fonction critique de l'entreprise.
+            </p>
+        </section>
+
+        
+
+        <div class="comparison-grid">
+            <section class="content-block reveal-left">
+                <h2 class="side-title">Libre & Ouvert</h2>
+                <div class="tag-list">
+                    <span>Zabbix</span> <span>Centreon</span> <span>Prometheus</span> <span>Grafana</span>
+                </div>
+                <p>Liberté et maîtrise totale. Pas de coût de licence, mais exige des compétences internes solides pour construire une plateforme robuste et personnalisée.</p>
+                <ul class="pros-list">
+                    <li>Indépendance vis-à-vis des éditeurs</li>
+                    <li>Personnalisation sans limites</li>
+                    <li>Communauté mondiale active</li>
+                </ul>
+            </section>
+
+            <section class="content-block reveal-right">
+                <h2 class="side-title prop">Clé en main</h2>
+                <div class="tag-list">
+                    <span>SolarWinds</span> <span>PRTG</span> <span>Datadog</span>
+                </div>
+                <p>Efficacité immédiate et support garanti. Idéal pour les structures cherchant à réduire le temps de configuration au profit de l'exploitation des données.</p>
+                <ul class="pros-list owners">
+                    <li>Support technique 24/7</li>
+                    <li>Découverte automatique</li>
+                    <li>Interface unifiée et intuitive</li>
+                </ul>
+            </section>
+        </div>
+
+        <section class="content-block reveal-left clean-block">
+            <h2>Une convergence inévitable</h2>
+            <p>Aujourd'hui, on ne se contente plus de vérifier si un routeur répond. Les DSI exigent une <strong>observabilité totale</strong> : corrélation d'événements, analyse de logs, et métriques cloud. Cette complexité pousse les entreprises vers des modèles hybrides.</p>
+        </section>
+
+        <section class="quote-box reveal-right">
+            "La réussite repose moins sur le modèle de licence que sur la capacité de l'équipe à s'approprier l'outil pour en faire un levier stratégique."
+        </section>
+
+        <section class="content-block reveal-left clean-block">
+            <h2>Le choix final</h2>
+            <p>L’avenir de la supervision se dessine dans la coexistence. Les organisations privilégiant la souveraineté resteront sur l'Open Source, tandis que celles cherchant la rapidité d'intégration opteront pour le propriétaire. Le facteur clé reste l'humain et les compétences disponibles.</p>
+        </section>
+
+        <div class="back-footer">
+            <a href="index.html#veille" class="btn-back">← RETOUR AU PORTFOLIO</a>
+        </div>
+    </main>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal-left, .reveal-right').forEach((el) => observer.observe(el));
+
+        window.onscroll = function() {
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            let scrolled = (winScroll / height) * 100;
+            document.getElementById("myBar").style.width = scrolled + "%";
+        };
+    </script>
+</body>
+</html>

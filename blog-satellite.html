@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veille : Internet par Satellite - Portfolio</title>
+    <link rel="stylesheet" href="CSS/blog-satellite.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@300;400;600&family=Orbitron:wght@700&display=swap');
+    </style>
+</head>
+<body>
+
+    <div class="progress-container"><div class="progress-bar" id="myBar"></div></div>
+
+    <header class="article-hero">
+        <div class="hero-content">
+            <span class="category-tag">Veille Technologique #01</span>
+            <h1 class="article-title">Un nouveau visage pour l’internet par satellite</h1>
+            <p class="article-meta">Publié le 15 Mars 2026 • Temps de lecture : 6 min</p>
+        </div>
+    </header>
+
+    <main class="article-container">
+        
+        <section class="intro-section reveal-left">
+            <p class="lead-text">
+                <span class="dropcap">D</span>epuis quelques années, l’internet par satellite est passé d’une solution de dernier recours à une technologie au cœur des discussions sur la connectivité mondiale. Il ne s’adresse plus seulement à des sites isolés, mais ambitionne de devenir une couche à part entière de l’infrastructure planétaire.
+            </p>
+        </section>
+
+        <section class="content-block reveal-right">
+            <h2>De la géostationnaire aux constellations LEO</h2>
+            <p>Historiquement, l’internet par satellite reposait sur des satellites géostationnaires (GEO) à 36 000 km d'altitude. Si cela permettait de couvrir de vastes régions, la latence de 600 ms rendait l'usage interactif pénible.</p>
+            <p>Les constellations <strong>LEO (Low Earth Orbit)</strong> changent la donne : à 550 km d'altitude, la latence chute à 20-30 ms, offrant une expérience proche de la fibre optique.</p>
+        </section>
+
+        
+
+        <section class="content-block reveal-left">
+            <h2>Starlink : La mégaconstellation de SpaceX</h2>
+            <p>Avec plus de 6 000 satellites en orbite, Starlink est devenu le leader incontesté. Sa force réside dans ses <strong>liaisons laser inter-satellites</strong>, créant un véritable réseau maillé spatial sans dépendre systématiquement des stations au sol.</p>
+            <div class="quote-box">
+                "Le satellite n'est plus un segment de niche, mais un pilier émergent de l'infrastructure mondiale."
+            </div>
+        </section>
+
+        <section class="content-block reveal-right">
+            <h2>Direct-to-Cell : Le smartphone satellite</h2>
+            <p>L’innovation la plus marquante est le <em>Direct-to-Cell</em>. L'objectif ? Permettre à votre smartphone habituel de capter le signal satellite dans les zones blanches, sans antenne supplémentaire. Le satellite devient une extension invisible du réseau cellulaire.</p>
+        </section>
+
+        <section class="data-grid reveal-left">
+            <div class="data-card">
+                <h4>6000+</h4>
+                <p>Satellites actifs</p>
+            </div>
+            <div class="data-card">
+                <h4>25ms</h4>
+                <p>Latence moyenne</p>
+            </div>
+            <div class="data-card">
+                <h4>250Mb/s</h4>
+                <p>Débit max</p>
+            </div>
+        </section>
+
+        <section class="content-block reveal-right">
+            <h2>Régulation et Durabilité</h2>
+            <p>L'avenir se jouera sur la régulation orbitale. Avec des dizaines de milliers de nouveaux objets en orbite, la gestion des débris spatiaux et la souveraineté technologique (IRIS² en Europe, Kuiper aux USA) deviennent des enjeux géopolitiques majeurs.</p>
+        </section>
+
+        <div class="back-footer">
+            <a href="index.html#veille" class="btn-back">← Retour à la veille</a>
+        </div>
+    </main>
+
+    <script>
+        // Animation au défilement
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal-left, .reveal-right').forEach((el) => observer.observe(el));
+
+        // Barre de progression
+        window.onscroll = function() {
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            let scrolled = (winScroll / height) * 100;
+            document.getElementById("myBar").style.width = scrolled + "%";
+        };
+    </script>
+</body>
+</html>
