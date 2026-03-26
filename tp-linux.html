@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TP Linux - Portfolio</title>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Orbitron:wght@400;700;900&family=Inter:wght@300;500;700&display=swap');
+    </style>
+
+    <link rel="stylesheet" href="CSS/tp-linux.css">
+</head>
+<body>
+
+    <canvas id="particleCanvas"></canvas>
+
+    <div class="tp-page-wrapper">
+        <div class="linux-bg-logo">
+            <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10 0C7.5 0 5 2 5 5c0 1 .5 2 1 3-1.5 1.5-3 4-3 6.5C3 17.5 5 20 10 20s7-2.5 7-5.5c0-2.5-1.5-5-3-6.5.5-1 1-2 1-3 0-3-2.5-5-5-5z" fill="currentColor"/>
+            </svg>
+        </div>
+
+        <header class="tp-header">
+            <h1 class="glitch-title">Travaux Pratiques <span>Linux Server</span></h1>
+            <p class="subtitle">root@portfolio:~# administration_opensource</p>
+        </header>
+
+        <div class="tp-3d-grid">
+            <div class="tp-card-3d glpi">
+                <div class="card-content">
+                    <div class="tp-icon tp-logo-contain">
+                        <img src="Image/Logo_entreprise/Glpi.png" alt="Logo GLPI" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/0/01/GLPI_logo.png'">
+                    </div>
+                    <h3>Installation GLPI</h3>
+                    <p>Déploiement de la solution de gestion de parc informatique et helpdesk (LAMP Stack).</p>
+                    <a href="Image/Compte_rendu/Linux/Installation de GLPI.pdf" target="_blank" class="btn-view">Explorer le TP</a>
+                </div>
+            </div>
+
+            <div class="tp-card-3d dhcp-linux">
+                <div class="card-content">
+                    <div class="tp-icon">🔌</div>
+                    <h3>DHCP Linux</h3>
+                    <p>Installation et configuration d'un serveur DHCP (isc-dhcp-server) avec gestion des baux statiques.</p>
+                    <a href="Image/Compte_rendu/Linux/_Installation d'un serveur DHCP sous Linux .pdf" target="_blank" class="btn-view">Explorer le TP</a>
+                </div>
+            </div>
+
+            <div class="tp-card-3d router">
+                <div class="card-content">
+                    <div class="tp-icon">🛡️</div>
+                    <h3>Routeur NAT-PAT</h3>
+                    <p>Configuration d'une machine Linux en passerelle réseau avec translation d'adresses via Iptables.</p>
+                    <a href="fichiers/tp-linux-nat.pdf" target="_blank" class="btn-view">Explorer le TP</a>
+                </div>
+            </div>
+
+            <div class="tp-card-3d lamp">
+    <div class="card-content">
+        <div class="tp-icon tp-logo-contain">
+            <img src="Image/Logo_entreprise/Lam.png" alt="Logo LAMP" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/LAMP_software_stack.svg/1200px-LAMP_software_stack.svg.png'">
+        </div>
+        <h3>Stack LAMP</h3>
+        <p>Installation et configuration complète de l'environnement : Linux, Apache, MariaDB et PHP pour héberger des services web.</p>
+        <a href="Image/Compte_rendu/Linux/Mise en place d'un serveur Web (apache).pdf" target="_blank" class="btn-view">Explorer le TP</a>
+    </div>
+</div>
+
+            <div class="tp-card-3d zabbix">
+                <div class="card-content">
+                    <div class="tp-icon tp-logo-contain">
+                        <img src="Image/Logo_entreprise/Zabbix.png" alt="Logo Zabbix" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/1/1a/Zabbix_logo.png'">
+                    </div>
+                    <h3>Supervision Zabbix</h3>
+                    <p>Installation de la plateforme de monitoring et mise en place d'agents pour surveiller l'infrastructure.</p>
+                    <a href="Image/Compte_rendu/Linux/Mise en place de zabbix.pdf" target="_blank" class="btn-view">Explorer le TP</a>
+                </div>
+            </div>
+        </div>
+
+       <a href="index.html#tp-linux-section" class="back-btn">
+    <i class="fas fa-arrow-left"></i> Retour au Portfolio
+</a>
+    </div>
+<nav class="side-nav linux-theme">
+    <div class="side-nav-label">/dev/navigation</div>
+    
+    <a href="tp-windows.html" class="nav-item win" title="TP Windows">
+        <span class="nav-icon">🪟</span>
+        <span class="nav-text">Windows</span>
+    </a>
+    
+    <a href="tp-linux.html" class="nav-item lin active" title="TP Linux">
+        <span class="nav-icon">🐧</span>
+        <span class="nav-text">Linux</span>
+    </a>
+    
+    <a href="tp-cisco.html" class="nav-item cis" title="TP Cisco">
+        <span class="nav-icon">📡</span>
+        <span class="nav-text">Cisco</span>
+    </a>
+</nav>
+    <script>
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let particlesArray = [];
+        const numberOfParticles = 120;
+
+        class Particle {
+            constructor() { this.init(); }
+            init() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 1;
+                this.speedX = Math.random() * 0.5 - 0.25;
+                this.speedY = Math.random() * 0.5 - 0.25;
+                // Alternance Vert Terminal et Orange
+                this.color = Math.random() > 0.5 ? 'rgba(0, 255, 65, ' : 'rgba(233, 84, 32, ';
+                this.opacity = Math.random() * 0.5 + 0.2;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x > canvas.width) this.x = 0;
+                if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0;
+                if (this.y < 0) this.y = canvas.height;
+            }
+            draw() {
+                ctx.fillStyle = this.color + this.opacity + ')';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function init() {
+            particlesArray = [];
+            for (let i = 0; i < numberOfParticles; i++) { particlesArray.push(new Particle()); }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+            }
+            requestAnimationFrame(animate);
+        }
+        init();
+        animate();
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            init();
+        });
+    </script>
+</body>
+</html>
