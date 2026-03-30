@@ -1,0 +1,1544 @@
+/* ============================================================
+   1. VARIABLES & CONFIGURATION GÉNÉRALE
+   ============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Inter:wght@300;500;700&family=Orbitron:wght@400;700;900&display=swap');
+/* --- AJUSTEMENT GLOBAL DE LA HEADER --- */
+.nav-container {
+    max-width: 98%; /* On utilise presque toute la largeur de l'écran */
+    margin: 0 auto;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: flex-start; /* Aligne tout vers la gauche pour gérer l'espace */
+    align-items: center;
+    gap: 40px; /* Espace entre le Logo et le début des menus */
+}
+
+/* --- LOGO SANS RETOUR À LA LIGNE --- */
+.logo {
+    white-space: nowrap; /* Empêche le nom de se couper */
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.1rem;
+    flex-shrink: 0; /* Empêche le logo de s'écraser */
+}
+
+/* --- NAVIGATION SUR UNE SEULE LIGNE --- */
+.nav-wrapper {
+    flex-grow: 1; /* Prend tout l'espace restant */
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    justify-content: space-between; /* Espace les rubriques uniformément */
+    gap: 20px; /* Espace minimum entre chaque mot */
+    margin: 0;
+    padding: 0;
+}
+
+.nav-item {
+    white-space: nowrap; /* INTERDIT le retour à la ligne sur les mots */
+    text-decoration: none;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.7rem; /* Taille optimale pour 8 éléments */
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: rgba(224, 230, 237, 0.7);
+    transition: all 0.3s ease;
+}
+
+/* --- SUPPRESSION DU SYSTEM STATUS (Optionnel) --- */
+/* Si l'écran est trop petit, on cache le "System Active" pour laisser la place aux rubriques */
+@media (max-width: 1200px) {
+    .system-status {
+        display: none;
+    }
+}
+#bgCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Derrière le contenu */
+    background-color: #05070a; /* Ton fond sombre actuel */
+}
+html {
+    scroll-behavior: smooth; /* Animation de glisse fluide */
+    scroll-padding-top: 90px; /* Évite que la nav barre ne cache tes titres */
+}
+.section {
+    background: rgba(5, 7, 10, 0.7); /* Fond semi-transparent */
+    backdrop-filter: blur(5px);      /* Flou léger pour la lisibilité */
+    margin-bottom: 50px;
+    padding: 40px 20px;
+    border-radius: 15px;
+}
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 15px; /* Espacement réduit pour faire tenir les 8 liens */
+    margin: 0;
+    padding: 0;
+}
+
+.nav-item {
+    text-decoration: none;
+    color: rgba(224, 230, 237, 0.7);
+    font-family: 'Orbitron', sans-serif; /* Police plus tech */
+    font-size: 0.75rem; /* Un peu plus petit car il y a beaucoup de liens */
+    font-weight: 700; /* Plus épais comme demandé */
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    transition: all 0.3s ease;
+    position: relative;
+    padding: 5px 2px;
+}
+
+/* Surbrillance et Hover */
+.nav-item:hover, .nav-item.active {
+    color: #00f2ff !important;
+    text-shadow: 0 0 12px rgba(0, 242, 255, 0.8);
+}
+
+.nav-item::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 3px; /* Trait plus épais */
+    background: #00f2ff;
+    box-shadow: 0 0 10px #00f2ff;
+    transition: width 0.3s ease;
+}
+
+.nav-item.active::after {
+    width: 100%;
+}
+
+/* Petit trait brillant sous le lien actif */
+.nav-item.active::after {
+    content: "";
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: #00f2ff;
+    box-shadow: 0 0 8px #00f2ff;
+}
+:root {
+  --bg: #06070a;
+  --card-bg: #0f121a;
+  --cyan: #00f2ff;
+  --purple: #7000ff;
+  --rgb-red: #ff0055;
+  --text: #e0e6ed;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+/* --- TITRES --- */
+h1, h2, h3, .logo, .section-title, .nav-links li a {
+  font-family: 'Syncopate', sans-serif;
+  text-transform: uppercase;
+}
+
+.section-title {
+  color: var(--cyan);
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+}
+
+/* ============================================================
+   2. NAVIGATION RAFFINÉE (FIXE)
+   ============================================================ */
+/* --- BARRE DE NAVIGATION --- */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1001; /* Au-dessus du canvas et du loader */
+    background: rgba(5, 7, 10, 0.8); /* Fond sombre transparent */
+    backdrop-filter: blur(10px); /* Effet de flou moderne */
+    border-bottom: 1px solid rgba(0, 242, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 15px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: 2px;
+    font-size: 1.2rem;
+}
+
+.logo-m { color: #00f2ff; }
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-item {
+    text-decoration: none;
+    color: rgba(224, 230, 237, 0.7);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.nav-item:hover, .nav-item.active {
+    color: #00f2ff;
+    text-shadow: 0 0 10px rgba(0, 242, 255, 0.5);
+}
+
+/* Soulignement animé */
+.nav-item::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #00f2ff;
+    transition: width 0.3s ease;
+}
+
+.nav-item:hover::after, .nav-item.active::after {
+    width: 100%;
+}
+
+/* Status System */
+.system-status {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.7rem;
+    color: #00f2ff;
+}
+
+.pulse-icon {
+    width: 8px;
+    height: 8px;
+    background: #00f2ff;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #00f2ff;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.5); opacity: 0.5; }
+    100% { transform: scale(1); opacity: 1; }
+}
+.hero-intro {
+    padding-top: 120px; /* Espace pour ne pas être sous la nav barre fixe */
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+/* ============================================================
+   3. STRUCTURE DES SECTIONS
+   ============================================================ */
+.section { 
+  padding: 120px 10% 80px; 
+  opacity: 0; 
+  transform: translateY(40px); 
+  transition: 0.8s ease; 
+}
+
+.section.active { opacity: 1; transform: translateY(0); }
+/* ============================================================
+   4. DESIGN PROFIL
+   ============================================================ */
+
+/* Conteneur de l'introduction (Nom RGB) */
+.hero-intro {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 50px;
+}
+
+/* Effet Titre RGB & Revêtement */
+.rgb-title {
+    font-family: 'Syncopate', sans-serif;
+    font-size: clamp(2rem, 8vw, 4.5rem);
+    font-weight: 900;
+    letter-spacing: 12px;
+    margin: 0;
+    text-transform: uppercase;
+    
+    /* Animation de couleur fluide */
+    background: linear-gradient(to right, #00f2ff, #7000ff, #ff00c1, #00f2ff);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shine-rgb 4s linear infinite;
+    
+    /* Surbrillance Glow */
+    filter: drop-shadow(0 0 15px rgba(0, 242, 255, 0.4));
+}
+
+@keyframes shine-rgb {
+    to { background-position: 200% center; }
+}
+
+.neon-separator {
+    width: 100px;
+    height: 3px;
+    background: #00f2ff;
+    margin: 15px auto;
+    border-radius: 10px;
+    box-shadow: 0 0 15px #00f2ff;
+}
+
+/* Bloc Profil Transparent (Glassmorphism) */
+.profile-container.transparent-mode {
+    max-width: 950px;
+    margin: 0 auto;
+    background: rgba(5, 7, 10, 0.2); /* Très transparent pour l'animation de fond */
+    backdrop-filter: blur(8px); /* Flou pour la lisibilité du texte */
+    border: 1px solid rgba(0, 242, 255, 0.15);
+    padding: 45px;
+    border-radius: 30px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+}
+
+.profile-text-block p {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #e0e6ed;
+    margin-bottom: 20px;
+}
+
+/* Liste des points SISR */
+.sisr-points.full-width {
+    list-style: none;
+    padding: 0;
+    margin: 30px 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.sisr-points.full-width li {
+    background: rgba(0, 242, 255, 0.05);
+    padding: 20px;
+    border-radius: 15px;
+    border-left: 4px solid #00f2ff;
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+.sisr-points.full-width li:hover {
+    background: rgba(0, 242, 255, 0.1);
+    transform: translateY(-5px);
+}
+/* ============================================================
+   5. BLOCS BTS SIO 3D (CYAN VS VIOLET)
+   ============================================================ */
+#sio-options { perspective: 1200px; }
+
+.options-container {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.option-card {
+  flex: 1;
+  min-width: 320px;
+  background: rgba(15, 18, 26, 0.8);
+  padding: 40px 30px;
+  border-radius: 25px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  transform-style: preserve-3d;
+  position: relative;
+}
+
+/* Style SISR (Cyan) */
+.sisr-card { border-left: 5px solid var(--cyan); }
+.sisr-card:hover {
+  transform: translateY(-15px) rotateX(10deg) rotateY(-5deg);
+  border-color: var(--cyan);
+  box-shadow: 0 0 30px rgba(0, 242, 255, 0.2);
+}
+.sisr-card .option-tag { background: rgba(0, 242, 255, 0.1); color: var(--cyan); }
+.sisr-card .option-status { color: var(--cyan); border-top: 1px solid rgba(0, 242, 255, 0.2); }
+
+/* Style SLAM (Violet) */
+.slam-card { border-left: 5px solid var(--purple); }
+.slam-card:hover {
+  transform: translateY(-15px) rotateX(10deg) rotateY(5deg);
+  border-color: var(--purple);
+  box-shadow: 0 0 30px rgba(112, 0, 255, 0.2);
+}
+.slam-card .option-tag { background: rgba(112, 0, 255, 0.1); color: var(--purple); }
+.slam-card .option-status { color: var(--purple); border-top: 1px solid rgba(112, 0, 255, 0.2); }
+
+.option-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.option-tag { font-family: 'Orbitron', sans-serif; font-size: 0.7rem; padding: 5px 15px; border-radius: 50px; font-weight: 900; }
+.option-icon { font-size: 2rem; }
+.option-list { list-style: none; padding: 0; margin-top: 20px; }
+.option-list li { font-size: 0.85rem; margin-bottom: 10px; opacity: 0.8; }
+.option-status { margin-top: 20px; padding-top: 15px; font-family: 'Syncopate', sans-serif; font-size: 0.6rem; font-weight: 700; text-align: center; }
+
+/* ============================================================
+   6. DOCUMENTATION TECHNIQUE (DESIGN 3D & ICÔNES)
+   ============================================================ */
+#documentation {
+    perspective: 1200px;
+}
+
+.docs-container { 
+    display: flex; 
+    gap: 25px; 
+    flex-wrap: wrap; 
+    justify-content: center; 
+    margin-top: 40px; 
+}
+
+.doc-card { 
+    flex: 1;
+    min-width: 280px;
+    max-width: 350px;
+    background: rgba(15, 18, 26, 0.7); 
+    padding: 35px 25px; 
+    border-radius: 25px; 
+    text-align: center; 
+    border: 1px solid rgba(255, 255, 255, 0.05); 
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1); 
+    transform-style: preserve-3d;
+    backdrop-filter: blur(10px);
+}
+
+/* Effet au survol : Inclinaison et élévation */
+.doc-card:hover { 
+    transform: translateY(-15px) rotateX(10deg);
+    background: rgba(15, 18, 26, 0.9);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Conteneur de l'icône (Le petit carré derrière le logo) */
+.doc-icon-wrapper {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 20px;
+    padding: 15px;
+    transition: transform 0.4s ease, background 0.4s ease;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* L'icône ressort de la carte au survol (Effet Pop-out) */
+.doc-card:hover .doc-icon-wrapper {
+    transform: translateZ(40px) scale(1.1);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.doc-svg {
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.1));
+}
+
+/* Bordures colorées spécifiques */
+.windows-3d { border-bottom: 4px solid #00a4ef; }
+.linux-3d { border-bottom: 4px solid #f8981d; }
+.cisco-3d { border-bottom: 4px solid #22ffb0; }
+
+.doc-card h3 {
+    font-size: 1.2rem;
+    color: #fff;
+    margin-bottom: 15px;
+    font-family: 'Syncopate', sans-serif;
+}
+
+.doc-card p {
+    font-size: 0.85rem;
+    color: rgba(224, 230, 237, 0.6);
+    line-height: 1.6;
+    margin-bottom: 25px;
+    min-height: 45px;
+}
+
+/* ============================================================
+   BOUTONS DE DOCUMENTATION (CORRECTION VISIBILITÉ)
+   ============================================================ */
+.btn-doc {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 25px;
+    border-radius: 50px;
+    background: transparent;
+    text-decoration: none;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    /* On force une bordure de base pour éviter le côté "bouton blanc" */
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+}
+
+/* --- ÉTAT PAR DÉFAUT PAR TECH (Bordures Colorées) --- */
+
+.windows-3d .btn-doc {
+    border-color: #00a4ef;
+    color: #00a4ef;
+}
+
+.linux-3d .btn-doc {
+    border-color: #f8981d;
+    color: #f8981d;
+}
+
+.cisco-3d .btn-doc {
+    border-color: #22ffb0;
+    color: #22ffb0;
+}
+
+/* --- EFFETS AU SURVOL (Remplissage) --- */
+
+.windows-3d .btn-doc:hover { 
+    background: #00a4ef; 
+    color: #fff;
+    box-shadow: 0 0 20px rgba(0, 164, 239, 0.6); 
+    transform: scale(1.05);
+}
+
+.linux-3d .btn-doc:hover { 
+    background: #f8981d; 
+    color: #fff;
+    box-shadow: 0 0 20px rgba(248, 152, 29, 0.6); 
+    transform: scale(1.05);
+}
+
+.cisco-3d .btn-doc:hover { 
+    background: #22ffb0; 
+    color: #000; 
+    box-shadow: 0 0 20px rgba(34, 255, 176, 0.6); 
+    transform: scale(1.05);
+}
+
+/* --- STYLE DE LA CARTE QUAND SÉLECTIONNÉE --- */
+.doc-card.selected {
+    background: rgba(255, 255, 255, 0.05);
+    border-width: 2px;
+}
+
+.windows-3d.selected { border-color: #00a4ef; box-shadow: inset 0 0 15px rgba(0, 164, 239, 0.2); }
+.linux-3d.selected { border-color: #f8981d; box-shadow: inset 0 0 15px rgba(248, 152, 29, 0.2); }
+.cisco-3d.selected { border-color: #22ffb0; box-shadow: inset 0 0 15px rgba(34, 255, 176, 0.2); }
+/* --- ZONE DES TP --- */
+.tp-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 50px;
+    min-height: 0;
+    transition: all 0.5s ease;
+}
+
+.tp-item {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    animation: slideUp 0.5s ease forwards;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.tp-service-icon {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.tp-item h4 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.9rem;
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+.tp-item p {
+    font-size: 0.8rem;
+    color: rgba(224, 230, 237, 0.6);
+    margin-bottom: 15px;
+}
+
+.btn-tp-open {
+    display: inline-block;
+    padding: 8px 15px;
+    background: transparent;
+    border: 1px solid var(--cyan);
+    color: var(--cyan);
+    text-decoration: none;
+    font-size: 0.7rem;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.btn-tp-open:hover {
+    background: var(--cyan);
+    color: #000;
+}
+
+/* Mise en avant de la carte sélectionnée */
+.doc-card.selected {
+    border-color: var(--cyan);
+    background: rgba(0, 242, 255, 0.05);
+    transform: scale(1.05) translateY(-10px);
+}
+/* --- PAGINATION --- */
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-top: 30px;
+    padding-bottom: 20px;
+}
+
+.btn-page {
+    background: transparent;
+    border: 1px solid var(--cyan);
+    color: var(--cyan);
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.7rem;
+    transition: 0.3s;
+}
+
+.btn-page:hover:not(:disabled) {
+    background: var(--cyan);
+    color: #000;
+}
+
+.btn-page:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    border-color: #666;
+    color: #666;
+}
+
+.page-numbers {
+    font-family: 'Syncopate', sans-serif;
+    font-size: 0.9rem;
+    color: #fff;
+    letter-spacing: 2px;
+}
+
+#current-page-display {
+    color: var(--cyan);
+    font-weight: bold;
+}
+/* Style spécifique pour la carte GNS3 */
+.gns3-card {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(145deg, #0f121a, #05070a);
+    border: 1px solid rgba(0, 242, 255, 0.2);
+    transition: all 0.4s ease;
+}
+
+.gns3-card:hover {
+    border-color: #72bf44; /* Vert officiel GNS3 */
+    box-shadow: 0 0 20px rgba(114, 191, 68, 0.2);
+}
+
+.gns3-logo img {
+    width: 60px;
+    filter: drop-shadow(0 0 8px rgba(114, 191, 68, 0.5));
+}
+
+/* Container pour l'animation Canvas */
+.leों-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none; /* Laisse cliquer le bouton dessous */
+    opacity: 0.6;
+}
+
+.card-content {
+    position: relative;
+    z-index: 2; /* Place le texte au-dessus de l'animation */
+}
+.gns3-3d:hover {
+    border: 1px solid #72bf44 !important;
+    box-shadow: 0 0 20px rgba(114, 191, 68, 0.3);
+}
+/* ============================================================
+   DESIGN DES PROJETS PPE (RECTANGLES)
+   ============================================================ */
+.ppe-container {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.ppe-card {
+    display: flex;
+    background: rgba(15, 18, 26, 0.7);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 30px;
+    position: relative;
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+}
+
+/* Effet 3D au survol */
+.ppe-card:hover {
+    transform: translateX(10px) scale(1.02);
+    background: rgba(15, 18, 26, 0.9);
+}
+
+/* Couleurs Spécifiques */
+.ppe-wifi { border-left: 6px solid var(--cyan); }
+.ppe-wifi:hover { box-shadow: -10px 0 30px rgba(0, 242, 255, 0.15); border-color: var(--cyan); }
+
+.ppe-zabbix { border-left: 6px solid #ff4d4d; }
+.ppe-zabbix:hover { box-shadow: -10px 0 30px rgba(255, 77, 77, 0.15); border-color: #ff4d4d; }
+
+.ppe-m2l { border-left: 6px solid var(--purple); }
+.ppe-m2l:hover { box-shadow: -10px 0 30px rgba(112, 0, 255, 0.15); border-color: var(--purple); }
+
+.ppe-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.ppe-number {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 900;
+    opacity: 0.5;
+    letter-spacing: 2px;
+}
+
+.ppe-card h3 {
+    margin: 0;
+    font-size: 1.4rem;
+    color: #fff;
+}
+
+.ppe-card p {
+    font-size: 0.95rem;
+    color: rgba(224, 230, 237, 0.7);
+    margin-bottom: 20px;
+    max-width: 800px;
+}
+
+.ppe-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 10px;
+    list-style: none;
+    padding: 0;
+    margin-bottom: 25px;
+}
+
+.ppe-list li {
+    font-size: 0.85rem;
+    padding-left: 20px;
+    position: relative;
+}
+
+.ppe-list li::before {
+    content: '▹';
+    position: absolute;
+    left: 0;
+    color: inherit; /* Prend la couleur du parent */
+}
+
+/* Boutons PPE */
+.ppe-actions {
+    display: flex;
+    gap: 15px;
+}
+
+.btn-ppe {
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-family: 'Orbitron', sans-serif;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: 0.3s;
+}
+
+.btn-ppe-outline {
+    background: transparent;
+    color: rgba(255, 255, 255, 0.6);
+    padding: 10px 20px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-family: 'Orbitron', sans-serif;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: 0.3s;
+}
+
+.ppe-wifi .btn-ppe:hover { background: var(--cyan); color: #000; border-color: var(--cyan); }
+.ppe-zabbix .btn-ppe:hover { background: #ff4d4d; color: #fff; border-color: #ff4d4d; }
+.ppe-m2l .btn-ppe:hover { background: var(--purple); color: #fff; border-color: var(--purple); }
+
+.btn-ppe-outline:hover { color: #fff; border-color: #fff; }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .ppe-card { flex-direction: column; }
+    .ppe-header { flex-direction: column; align-items: flex-start; gap: 5px; }
+}
+.section-title-container {
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.section-number {
+    font-family: 'Orbitron', sans-serif;
+    color: var(--accent); /* Ton bleu cyan #00f2ff */
+    font-size: 1.2rem;
+    font-weight: bold;
+    opacity: 0.8;
+}
+
+.section-main-title {
+    font-family: 'Playfair Display', serif; /* Comme tes autres titres */
+    font-size: 2.2rem;
+    color: #fff;
+    margin: 0;
+}
+
+/* La ligne passe du Cyan (1ère année) au Purple (2ème année) */
+.timeline-line {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--cyan), var(--purple));
+    transform: translateX(-50%);
+}
+
+.timeline-item {
+    position: relative;
+    width: 50%;
+    padding: 20px 40px;
+    box-sizing: border-box;
+}
+
+/* Stage 1 à gauche, Stage 2 à droite */
+.stage-1 { left: 0; text-align: right; }
+.stage-2 { left: 50%; text-align: left; }
+
+.timeline-dot {
+    position: absolute;
+    top: 30px;
+    width: 16px;
+    height: 16px;
+    background: var(--bg);
+    border-radius: 50%;
+    z-index: 10;
+}
+
+/* Point Cyan pour la 1ère année */
+.stage-1 .timeline-dot { right: -8px; border: 3px solid var(--cyan); box-shadow: 0 0 10px var(--cyan); }
+/* Point Violet pour la 2ème année */
+.stage-2 .timeline-dot { left: -8px; border: 3px solid var(--purple); box-shadow: 0 0 10px var(--purple); }
+
+.timeline-date {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+.stage-1 .timeline-date { color: var(--cyan); }
+.stage-2 .timeline-date { color: var(--purple); }
+
+.stage-card {
+    background: rgba(15, 18, 26, 0.7);
+    padding: 25px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    transition: 0.4s;
+}
+
+.stage-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(255, 255, 255, 0.2);
+    background: rgba(15, 18, 26, 0.9);
+}
+
+.stage-header { display: flex; align-items: center; gap: 20px; margin-bottom: 15px; }
+
+/* Inversion pour le bloc de gauche (Stage 1) */
+.stage-1 .stage-header { flex-direction: row-reverse; }
+
+.company-logo {
+    width: 65px;
+    height: 65px;
+    background: #fff;
+    border-radius: 12px;
+    padding: 8px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.company-logo img { width: 100%; height: auto; max-height: 100%; object-fit: contain; }
+
+.company-name {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: bold;
+    margin-top: 5px;
+}
+.stage-1 .company-name { color: var(--cyan); }
+.stage-2 .company-name { color: var(--purple); }
+
+.stage-tags {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+.stage-1 .stage-tags { justify-content: flex-end; }
+.stage-2 .stage-tags { justify-content: flex-start; }
+
+.stage-tags li {
+    font-size: 0.7rem;
+    font-family: 'Orbitron', sans-serif;
+    opacity: 0.7;
+}
+.stage-1 .stage-tags li { color: var(--cyan); }
+.stage-2 .stage-tags li { color: var(--purple); }
+
+/* --- RESPONSIVE MOBILE --- */
+@media (max-width: 768px) {
+    .timeline-line { left: 20px; transform: none; }
+    .timeline-item { width: 100%; left: 0; padding-left: 50px; text-align: left; }
+    .stage-1 .timeline-dot, .stage-2 .timeline-dot { left: 12px; }
+    .stage-1 .stage-header { flex-direction: row; }
+    .stage-1 .stage-tags { justify-content: flex-start; }
+}
+/* ============================================================
+   DESIGN DES CERTIFICATIONS
+   ============================================================ */
+.certs-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 25px;
+    margin-top: 40px;
+}
+
+.cert-card {
+    background: rgba(15, 18, 26, 0.7);
+    border-radius: 20px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+}
+
+/* Effet 3D au survol */
+.cert-card:hover {
+    transform: translateY(-10px) rotateX(5deg);
+    background: rgba(20, 25, 35, 0.9);
+}
+
+/* Couleurs spécifiques par certification */
+.cert-cisco { border-top: 4px solid #005073; }
+.cert-cisco:hover { box-shadow: 0 10px 30px rgba(0, 80, 115, 0.3); }
+
+.cert-anssi { border-top: 4px solid #004b92; }
+.cert-anssi:hover { box-shadow: 0 10px 30px rgba(0, 75, 146, 0.3); }
+
+.cert-cnil { border-top: 4px solid #0081c5; }
+.cert-cnil:hover { box-shadow: 0 10px 30px rgba(0, 129, 197, 0.3); }
+
+/* Logo de la certif */
+.cert-icon {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 20px;
+    background: #fff;
+    padding: 10px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.cert-icon img {
+    max-width: 100%;
+    height: auto;
+}
+
+.cert-provider {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.65rem;
+    color: var(--cyan);
+    letter-spacing: 1px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.cert-info h3 {
+    font-size: 1.1rem;
+    color: #fff;
+    margin-bottom: 15px;
+}
+
+.cert-info p {
+    font-size: 0.85rem;
+    color: rgba(224, 230, 237, 0.6);
+    line-height: 1.6;
+    margin-bottom: 25px;
+    min-height: 60px;
+}
+
+/* Bouton Voir PDF */
+.btn-cert {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 50px;
+    background: transparent;
+    border: 1px solid var(--cyan);
+    color: var(--cyan);
+    text-decoration: none;
+    font-size: 0.75rem;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    transition: 0.3s;
+}
+
+.btn-cert:hover {
+    background: var(--cyan);
+    color: #000;
+    box-shadow: 0 0 15px var(--cyan);
+}
+
+/* Adaptation pour ANSSI/CNIL si tu veux des boutons de couleurs différentes */
+.cert-anssi .btn-cert { border-color: #004b92; color: #fff; background: #004b92; }
+.cert-anssi .btn-cert:hover { background: #fff; color: #004b92; box-shadow: 0 0 15px #fff; }
+
+.cert-cnil .btn-cert { border-color: #0081c5; color: #fff; background: #0081c5; }
+.cert-cnil .btn-cert:hover { background: #fff; color: #0081c5; box-shadow: 0 0 15px #fff; }
+/* ============================================================
+   DESIGN DES CERTIFICATIONS
+   ============================================================ */
+.certifications-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 25px;
+    margin-top: 40px;
+}
+
+.cert-card {
+    background: rgba(15, 18, 26, 0.7);
+    border-radius: 20px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    /* Aligné à gauche pour un look plus pro en SISR */
+    align-items: flex-start; 
+    text-align: left;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+}
+
+.cert-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--cyan);
+    box-shadow: 0 10px 30px rgba(0, 242, 255, 0.2);
+}
+
+.cert-icon {
+    width: 70px;
+    height: 70px;
+    margin-bottom: 20px;
+    background: #fff;
+    padding: 10px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.cert-icon img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.cert-provider {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.65rem;
+    color: var(--cyan);
+    letter-spacing: 1px;
+    display: block;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.cert-info h3 {
+    font-size: 1.1rem;
+    color: #fff;
+    margin-bottom: 15px;
+}
+
+.cert-info p {
+    font-size: 0.85rem;
+    color: rgba(224, 230, 237, 0.6);
+    line-height: 1.6;
+    margin-bottom: 25px;
+    flex-grow: 1; /* Pousse le bouton vers le bas */
+}
+
+/* --- LE PIED DE CARTE (Nouveau) --- */
+.cert-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: auto;
+}
+
+.status-tag {
+    font-size: 0.65rem;
+    padding: 4px 10px;
+    background: rgba(0, 255, 136, 0.1);
+    color: #00ff88;
+    border: 1px solid #00ff88;
+    border-radius: 4px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+/* --- LE BOUTON (Réparé) --- */
+.btn-cert-small {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 8px;
+    background: rgba(0, 242, 255, 0.1);
+    border: 1px solid var(--cyan);
+    color: var(--cyan);
+    text-decoration: none;
+    font-size: 0.7rem;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    transition: 0.3s;
+    text-transform: uppercase;
+}
+
+.btn-cert-small:hover {
+    background: var(--cyan);
+    color: #000;
+    box-shadow: 0 0 15px var(--cyan);
+}
+/* ============================================================
+   8. VEILLE TECHNOLOGIQUE
+   ============================================================ */
+.veille-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 20px; }
+
+.veille-card { text-align: center; background: var(--card-bg); padding: 10px; border-radius: 15px; }
+
+.veille-card img { width: 100%; border-radius: 10px; height: 120px; object-fit: cover; }
+/* --- SECTION VEILLE --- */
+.veille-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+    perspective: 1000px;
+}
+
+.veille-card-3d {
+    background: rgba(15, 12, 25, 0.8); /* Fond teinté violet très sombre */
+    border: 1px solid rgba(112, 0, 255, 0.2);
+    border-radius: 25px;
+    padding: 40px 30px;
+    backdrop-filter: blur(12px);
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    transform-style: preserve-3d;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.veille-card-3d:hover {
+    transform: translateY(-15px) rotateX(5deg);
+    border-color: #7000ff;
+    box-shadow: 0 15px 35px rgba(112, 0, 255, 0.2);
+}
+
+.veille-icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    filter: drop-shadow(0 0 10px rgba(112, 0, 255, 0.5));
+}
+
+.veille-tag {
+    display: inline-block;
+    padding: 4px 12px;
+    background: rgba(112, 0, 255, 0.1);
+    color: #b380ff;
+    border-radius: 50px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    border: 1px solid rgba(112, 0, 255, 0.3);
+}
+
+.veille-card-3d h3 {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.2rem;
+    color: #fff;
+    margin-bottom: 15px;
+    line-height: 1.4;
+}
+
+.veille-card-3d p {
+    font-size: 0.9rem;
+    color: rgba(224, 230, 237, 0.7);
+    line-height: 1.6;
+    margin-bottom: 30px;
+    flex-grow: 1;
+}
+
+/* Bouton style "Blog" */
+.btn-veille {
+    display: inline-block;
+    padding: 12px 25px;
+    background: transparent;
+    border: 1px solid #7000ff;
+    color: #fff;
+    text-decoration: none;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.8rem;
+    border-radius: 50px;
+    transition: 0.4s;
+}
+
+.btn-veille:hover {
+    background: #7000ff;
+    box-shadow: 0 0 20px rgba(112, 0, 255, 0.6);
+    transform: scale(1.05);
+}
+
+/* Couleurs au survol spécifiques */
+.satellite:hover { border-color: #00f2ff; } /* Cyan pour l'espace */
+.supervision:hover { border-color: #00ff41; } /* Vert pour le réseau */
+.virtualisation:hover { border-color: #f8981d; } /* Orange pour VMware/Proxmox */
+
+/* ============================================================
+   9. LOADER & FOOTER
+   ============================================================ */
+#loader {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.loader-circle {
+  width: 50px;
+  height: 50px;
+  border: 3px solid rgba(0, 242, 255, 0.1);
+  border-top: 3px solid var(--cyan);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.footer {
+  padding: 40px;
+  text-align: center;
+  font-size: 0.7rem;
+  color: rgba(224, 230, 237, 0.4);
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+@media (max-width: 1024px) {
+    .nav-links {
+        gap: 10px;
+    }
+    .nav-item {
+        font-size: 0.65rem;
+        letter-spacing: 0.5px;
+    }
+    .system-status {
+        display: none; /* On cache le status pour gagner de la place */
+    }
+}
+:root {
+    --deep-blue: #001219;
+    --water-blue: #0077b6;
+    --light-blue: #90e0ef;
+    --sme-blue: #0056b3; /* À adapter selon le bleu du logo */
+}
+
+.water-section {
+    padding: 100px 20px;
+    display: flex;
+    justify-content: center;
+    background: var(--deep-blue);
+    overflow: hidden;
+}
+
+.company-container {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    max-width: 1000px;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: water-float-up 1.5s ease-out forwards;
+}
+
+@keyframes water-float-up {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.company-logo-wrapper img {
+    width: 200px;
+    height: auto;
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(144, 224, 239, 0.2);
+    filter: drop-shadow(0 0 10px rgba(0, 119, 182, 0.5));
+}
+
+.company-name-water {
+    font-size: 3rem;
+    background: linear-gradient(to right, var(--light-blue), #fff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 10px;
+}
+
+/* --- LE BOUTON LIQUIDE --- */
+.btn-liquid {
+    position: relative;
+    padding: 15px 40px;
+    display: block;
+    text-decoration: none;
+    text-transform: uppercase;
+    width: 250px;
+    overflow: hidden;
+    border-radius: 40px;
+    border: 2px solid var(--water-blue);
+    transition: 0.5s;
+    text-align: center;
+}
+
+.btn-text {
+    position: relative;
+    z-index: 1;
+    color: var(--light-blue);
+    font-weight: bold;
+    letter-spacing: 2px;
+    transition: 0.5s;
+}
+
+.btn-liquid .liquid {
+    position: absolute;
+    top: -80px;
+    left: 0;
+    width: 100%;
+    height: 200px;
+    background: var(--water-blue);
+    box-shadow: inset 0 0 50px rgba(0,0,0,0.5);
+    transition: 0.5s;
+    z-index: 0;
+}
+
+/* L'effet de vague à l'intérieur du bouton */
+.btn-liquid .liquid::after,
+.btn-liquid .liquid::before {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -75%);
+}
+
+.btn-liquid .liquid::before {
+    border-radius: 45%;
+    background: var(--deep-blue);
+    animation: animate-wave 5s linear infinite;
+}
+
+.btn-liquid .liquid::after {
+    border-radius: 40%;
+    background: rgba(0, 18, 25, 0.5);
+    animation: animate-wave 10s linear infinite;
+}
+
+.btn-liquid:hover .liquid {
+    top: -120px; /* L'eau monte */
+}
+
+.btn-liquid:hover .btn-text {
+    color: white;
+}
+
+@keyframes animate-wave {
+    0% { transform: translate(-50%, -75%) rotate(0deg); }
+    100% { transform: translate(-50%, -75%) rotate(360deg); }
+}
+
+/* --- TRANSITION PLEIN ÉCRAN --- */
+.water-transition {
+    position: fixed;
+    top: 100%; /* Caché en bas */
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--water-blue);
+    z-index: 10000;
+    transition: top 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.water-transition.active {
+    top: 0;
+}
+/* --- LE CONTENEUR PRINCIPAL SME --- */
+.company-container {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    max-width: 1000px;
+    padding: 40px;
+    
+    /* On utilise un fond très légèrement blanc ou bleu mais transparent */
+    background: rgba(255, 255, 255, 0.03); 
+    
+    /* L'effet de flou qui laisse passer la lumière de l'arrière-plan */
+    backdrop-filter: blur(8px); 
+    -webkit-backdrop-filter: blur(8px);
+    
+    border-radius: 24px;
+    border: 1px solid rgba(144, 224, 239, 0.1); /* Bordure fine et discrète */
+    
+    margin: 0 auto;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: water-float-up 1.5s ease-out forwards;
+}
+
+/* --- LE TITRE SME --- */
+.company-name-water {
+    font-size: 2.8rem;
+    font-weight: 800;
+    /* On garde un dégradé lumineux pour que ça ressorte sur le fond sombre */
+    background: linear-gradient(to right, #90e0ef, #ffffff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 5px;
+    filter: drop-shadow(0 0 10px rgba(144, 224, 239, 0.3));
+}
+
+.company-subtitle {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+}
+
+/* --- LE LOGO --- */
+.company-logo-wrapper img {
+    width: 180px;
+    height: auto;
+    border-radius: 15px;
+    /* On ajoute une lueur autour du logo pour qu'il ne se perde pas dans le fond */
+    box-shadow: 0 0 30px rgba(0, 119, 182, 0.4);
+    transition: transform 0.3s ease;
+}
+
+.company-logo-wrapper img:hover {
+    transform: scale(1.05);
+}

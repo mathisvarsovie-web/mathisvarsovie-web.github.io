@@ -1,0 +1,258 @@
+:root {
+    --cisco-blue: #00bceb;
+    --cisco-dark: #002244;
+    --bg-dark: #020b16;
+    --card-bg: rgba(2, 20, 40, 0.95);
+    --text-main: #ffffff;
+    --text-muted: #b0c4de;
+}
+
+body {
+    margin: 0; background-color: var(--bg-dark);
+    font-family: 'Inter', sans-serif; color: var(--text-main);
+}
+
+#networkCanvas { position: fixed; top: 0; left: 0; z-index: -1; }
+
+.cisco-bg-logo {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 40vw; opacity: 0.05; color: var(--cisco-blue); pointer-events: none;
+}
+
+.tp-page-wrapper {
+    min-height: 100vh; padding: 80px 5%; display: flex; flex-direction: column; align-items: center;
+}
+
+.glitch-title {
+    font-family: 'Syncopate'; font-size: 3rem;
+    text-shadow: 0 0 20px rgba(0, 188, 235, 0.6); text-align: center;
+}
+.glitch-title span { color: var(--cisco-blue); }
+
+.subtitle {
+    font-family: 'Orbitron'; color: var(--cisco-blue);
+    letter-spacing: 3px; font-size: 0.8rem; opacity: 0.8;
+}
+
+.tp-3d-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px; width: 100%; max-width: 1200px; perspective: 1000px; margin-top: 50px;
+}
+
+.tp-card-3d {
+    background: var(--card-bg);
+    border: 1px solid rgba(0, 188, 235, 0.2);
+    border-radius: 20px; backdrop-filter: blur(10px);
+    padding: 40px 30px; transition: 0.5s; transform-style: preserve-3d;
+}
+
+.tp-card-3d:hover {
+    transform: translateY(-10px) rotateX(5deg) rotateY(5deg);
+    border-color: var(--cisco-blue);
+    box-shadow: 0 0 30px rgba(0, 188, 235, 0.3);
+}
+
+.tp-card-3d h3 {
+    font-family: 'Orbitron'; color: var(--cisco-blue); font-size: 1.3rem; margin-bottom: 15px;
+}
+
+.tp-card-3d p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 25px; }
+
+.btn-view {
+    display: inline-block; padding: 10px 25px; border-radius: 5px;
+    border: 1px solid var(--cisco-blue); color: var(--cisco-blue);
+    text-decoration: none; font-family: 'Orbitron'; font-size: 0.8rem;
+    font-weight: 700; transition: 0.3s;
+}
+
+.btn-view:hover {
+    background: var(--cisco-blue); color: #fff;
+    box-shadow: 0 0 20px var(--cisco-blue);
+}
+
+/* Couleurs spécifiques Cisco au survol */
+.routing:hover { border-color: #00ffcc; }
+.security:hover { border-color: #ff3366; }
+.vlan:hover { border-color: #ffffff; }
+
+.back-link { margin-top: 50px; color: var(--cisco-blue); text-decoration: none; font-family: 'Orbitron'; }
+/* Couleurs spécifiques aux équipements réseaux */
+.tp-card-3d.vlan { border-top: 4px solid #00bceb; } /* Cyan Cisco */
+.tp-card-3d.inter-vlan { border-top: 4px solid #017cad; } /* Bleu moyen */
+.tp-card-3d.stp { border-top: 4px solid #58585b; } /* Gris technique */
+.tp-card-3d.acl { border-top: 4px solid #e2231a; } /* Rouge sécurité */
+.tp-card-3d.hsrp { border-top: 4px solid #64bbe3; } /* Bleu clair HA */
+
+.tp-card-3d:hover {
+    box-shadow: 0 10px 30px rgba(0, 188, 235, 0.2);
+}
+/* --- SIDE NAV THÈME CISCO --- */
+.side-nav.cisco-theme {
+    position: fixed;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    z-index: 1000;
+    padding: 25px 12px;
+    background: rgba(0, 43, 54, 0.85); /* Bleu très sombre type console */
+    backdrop-filter: blur(10px);
+    border-radius: 40px 0 0 40px;
+    border: 1px solid rgba(0, 188, 235, 0.3);
+    border-right: none;
+    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.5);
+}
+
+/* Label style Console Cisco */
+.side-nav-label {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    color: #00bceb; /* Bleu Cisco */
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    text-decoration: none;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 50%;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    border: 1px solid transparent;
+}
+
+/* Bulle de texte (Tooltip) */
+.nav-text {
+    position: absolute;
+    right: 70px;
+    background: #00bceb;
+    color: #fff;
+    padding: 7px 15px;
+    border-radius: 20px 20px 0 20px; /* Forme de bulle tech */
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateX(20px);
+    transition: all 0.3s ease;
+    pointer-events: none;
+    box-shadow: 0 5px 15px rgba(0, 188, 235, 0.4);
+}
+
+/* --- ÉTAT ACTIF (Cisco) --- */
+.nav-item.cis.active {
+    background: #00bceb;
+    border-color: #fff;
+    box-shadow: 0 0 25px rgba(0, 188, 235, 0.6);
+}
+
+.nav-item.cis.active .nav-icon {
+    filter: brightness(0) invert(1); /* L'icône devient blanche */
+}
+
+/* --- EFFETS AU SURVOL --- */
+.nav-item:hover {
+    background: rgba(0, 188, 235, 0.2);
+    border-color: #00bceb;
+    transform: scale(1.1);
+}
+
+.nav-item:hover .nav-text {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Couleurs spécifiques lors du survol des autres OS depuis Cisco */
+.nav-item.win:hover .nav-text { background: #00a4ef; }
+.nav-item.lin:hover .nav-text { background: #E95420; }
+
+/* --- BOUTON RETOUR FLOTTANT --- */
+.back-home-btn {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    z-index: 1001; /* Au-dessus de tout */
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.btn-inner {
+    background: rgba(15, 18, 26, 0.9);
+    border: 2px solid var(--cyan);
+    padding: 12px 20px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 15px rgba(0, 242, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.back-home-btn .icon {
+    font-size: 1.2rem;
+}
+
+.back-home-btn .text {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 900;
+    color: var(--cyan);
+    letter-spacing: 2px;
+}
+
+/* --- EFFETS AU SURVOL --- */
+.back-home-btn:hover {
+    transform: scale(1.1) rotate(-3deg);
+}
+
+.back-home-btn:hover .btn-inner {
+    background: var(--cyan);
+    box-shadow: 0 0 30px var(--cyan);
+}
+
+.back-home-btn:hover .text, 
+.back-home-btn:hover .icon {
+    color: #000;
+}
+
+/* Animation de pulsation discrète */
+@keyframes pulse-border {
+    0% { box-shadow: 0 0 0 0 rgba(0, 242, 255, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(0, 242, 255, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(0, 242, 255, 0); }
+}
+
+.back-home-btn .btn-inner {
+    animation: pulse-border 2s infinite;
+}
+
+/* Adaptation pour mobile */
+@media (max-width: 768px) {
+    .back-home-btn {
+        bottom: 20px;
+        left: 20px;
+    }
+    .back-home-btn .text {
+        display: none; /* Ne garde que l'icône sur petit écran */
+    }
+    .btn-inner {
+        padding: 15px;
+        border-radius: 50%;
+    }
+}

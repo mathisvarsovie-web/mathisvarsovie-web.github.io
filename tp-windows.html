@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TP Windows Server - Portfolio</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Orbitron:wght@400;700;900&family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="CSS/tp-windows.css">
+    <link rel="stylesheet" href="CSS/loader-windows.css">
+</head>
+<body>
+
+    <div id="loader-overlay">
+        <canvas id="particleCanvas"></canvas>
+        <div class="loader-text">INITIALISATION DES SERVICES WINDOWS...</div>
+    </div>
+
+    <div class="tp-page-wrapper" id="main-content">
+        <header class="tp-header">
+            <h1 class="glitch-title">Travaux Pratiques <span>Windows Server</span></h1>
+            <p class="subtitle">Administration & Services d'Infrastructure</p>
+        </header>
+
+        <div class="tp-3d-grid">
+            <div class="tp-card-3d ad-ds">
+                <div class="card-content">
+                    <div class="tp-icon">🛡️</div>
+                    <h3>Active Directory</h3>
+                    <p>Installation et promotion d'un contrôleur de domaine, structuration de l'annuaire et gestion des objets AD.</p>
+                    <a href="Image/Compte_rendu/Windows/Mise en place d'un serveur Active Directory .pdf" target="_blank" class="btn-view">Explorer le TP</a>
+                </div>
+            </div>
+
+            <div class="tp-card-3d powershell">
+                <div class="card-content">
+                    <div class="tp-icon">⌨️</div>
+                    <h3>AD DS via PowerShell</h3>
+                    <p>Administration avancée : automatisation de la création d'utilisateurs et d'unités d'organisation par script.</p>
+                    <a href="Image/Compte_rendu/Windows/Administration des services d’annuaire AD DS avec Powershell.pdf" target="_blank" class="btn-view">Explorer le TP</a>
+                </div>
+            </div>
+
+            <div class="tp-card-3d dns">
+                <div class="card-content">
+                    <div class="tp-icon">🌐</div>
+                    <h3>DNS Server 2022</h3>
+                    <p>Mise en place du service DNS : configuration des zones directes/inverses et des redirecteurs conditionnels.</p>
+                    <a href="Image/Compte_rendu/Windows/Mise en place d'un service sous DNS Windows Server 2022.pdf" target="_blank" class="btn-view">Explorer le TP</a>
+                </div>
+            </div>
+
+            <div class="tp-card-3d dhcp">
+                <div class="card-content">
+                    <div class="tp-icon">🔌</div>
+                    <h3>Serveur DHCP</h3>
+                    <p>Installation du rôle, gestion des étendues, des baux et mise en place de réservations d'adresses MAC.</p>
+                    <a href="Image/Compte_rendu/Windows/Mise en place d'un serveur DHCP .pdf" target="_blank" class="btn-view">Explorer le TP</a>
+                </div>
+            </div>
+
+            <div class="tp-card-3d gpo">
+                <div class="card-content">
+                    <div class="tp-icon">⚙️</div>
+                    <h3>Stratégies GPO</h3>
+                    <p>Sécurisation du parc : déploiement de lecteurs réseau, restrictions et scripts de logon.</p>
+                    <a href="fichiers/tp-gpo.pdf" target="_blank" class="btn-view">Explorer le TP</a>
+                </div>
+            </div>
+
+            <div class="tp-card-3d wds">
+                <div class="card-content">
+                    <div class="tp-icon">💿</div>
+                    <h3>Serveur WDS</h3>
+                    <p>Masterisation et déploiement automatisé d'images système Windows via le boot réseau PXE.</p>
+                    <a href="Image/Compte_rendu/Windows/_Configuration d'un serveur WDS.pdf" target="_blank" class="btn-view">Explorer le TP</a>
+                </div>
+            </div>
+
+            <div class="tp-card-3d radius">
+                <div class="card-content">
+                    <div class="tp-icon">🔐</div>
+                    <h3>Serveur Radius</h3>
+                    <p>Authentification centralisée (NPS) pour les accès réseau sécurisés et le contrôle d'accès.</p>
+                    <a href="fichiers/tp-radius.pdf" target="_blank" class="btn-view">Explorer le TP</a>
+                </div>
+            </div>
+        </div>
+
+        <a href="index.html#documentation" class="back-link">← Retour au Portfolio</a>
+    </div>
+
+    <nav class="side-nav">
+        <div class="side-nav-label">Navigation TP</div>
+        <a href="tp-windows.html" class="nav-item win" title="TP Windows"><span class="nav-icon">🪟</span></a>
+        <a href="tp-linux.html" class="nav-item lin" title="TP Linux"><span class="nav-icon">🐧</span></a>
+        <a href="tp-cisco.html" class="nav-item cis" title="TP Cisco"><span class="nav-icon">📡</span></a>
+    </nav>
+
+    <script src="JS/tp-windows-loader.js"></script>
+</body>
+</html>
