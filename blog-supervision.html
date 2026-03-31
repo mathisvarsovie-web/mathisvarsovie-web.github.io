@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veille : L'IA et la Supervision - Portfolio</title>
+    <link rel="stylesheet" href="CSS/blog-supervision.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;600&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="progress-container"><div class="progress-bar" id="myBar"></div></div>
+
+    <header class="article-hero">
+        <div class="hero-content">
+            <span class="category-tag">Veille Technologique #04</span>
+            <h1 class="article-title">L’intelligence artificielle, nouvel allié de la supervision</h1>
+            <p class="article-meta">INFRASTRUCTURE & OBSERVABILITÉ • 2026</p>
+        </div>
+    </header>
+
+    <main class="article-container">
+        
+        <section class="intro-section reveal-left">
+            <p class="lead-text">
+                <span class="dropcap">L</span>a supervision IT n’est plus ce qu’elle était il y a dix ans. 
+                Oubliez les alertes basées sur des seuils figés, les tableaux de bord remplis de lignes rouges et les équipes de nuit qui essaient de comprendre ce qui s’est vraiment passé au milieu de dizaines d’incidents non corrélés.
+                Aujourd’hui, l’intelligence artificielle entre en scène pour transformer la supervision en une activité plus réactive, plus intelligente et surtout… beaucoup plus efficace.
+            </p>
+        </section>
+
+        <section class="content-block reveal-right">
+            <h2>Supervision 2.0 : quand l’IA prend le relais</h2>
+            <p>Autrefois, la supervision se limitait à vérifier : <em>« Le CPU dépasse‑t‑il 80% ? »</em>, <em>« Le disque est‑il plein à plus de 90% ? »</em>. Poser ces questions, c’est regarder par le petit bout de la lorgnette.</p>
+            <p>Avec l’IA, on change de paradigme : on ne se contente plus de fixer des seuils, on apprend le comportement normal de chaque serveur, chaque applicatif, chaque lien, puis on repère ce qui s’en écarte, même légèrement.</p>
+            <p>On parle alors d’<strong>AIOps (Artificial Intelligence for IT Operations)</strong> : des plateformes qui combinent métriques, logs, traces et événements pour corriger, anticiper et expliquer les incidents.</p>
+        </section>
+
+        <section class="content-block reveal-left">
+            <h2>Ce que l’IA apporte concrètement</h2>
+            
+            <h3>1. Détection d’anomalies, pas seulement de seuils</h3>
+            <p>Plutôt que de déclencher une alerte quand le CPU franchit 80%, l’IA se demande : <em>« Ce comportement est‑il normal pour ce serveur, à cette heure, pour ce type de charge ? »</em>. Elle voit ce que l’humain ne voit pas dans le chaos des indicateurs classiques.</p>
+
+            <h3>2. Réduction drastique du bruit d’alertes</h3>
+            <p>L’IA regroupe automatiquement les alertes liées au même incident et filtre les événements redondants. Résultat : les équipes se concentrent sur les vrais problèmes critiques.</p>
+
+            <h3>3. Maintenance prédictive : anticiper au lieu de réparer</h3>
+            <p>En analysant la température des disques ou les taux d'erreurs sur le long terme, l’IA peut prédire une panne avant qu’elle n’impacte la production. La supervision devient un outil de prévention.</p>
+
+            <h3>4. Auto‑remédiation partielle</h3>
+            <p>Elle peut déclencher des actions prédéfinies : redémarrer un service, basculer vers un site de secours ou ajuster la mise à l’échelle (scaling) dans le cloud.</p>
+        </section>
+
+        
+
+        <section class="content-block reveal-right">
+            <h2>Les outils qui intègrent déjà l’IA</h2>
+            <ul>
+                <li><strong>Centreon AIOps :</strong> Corrélation d'incidents et analyse de racine causale.</li>
+                <li><strong>Darktrace & Cisco :</strong> Détection de comportements anormaux et attaques zero-day.</li>
+                <li><strong>Datadog & New Relic :</strong> Observabilité complète avec regroupement d'incidents.</li>
+            </ul>
+        </section>
+
+        <section class="content-block reveal-left">
+            <h2>Open source vs propriétaire : où se place l’IA ?</h2>
+            <p>Les solutions <strong>propriétaires</strong> offrent de l'IA clé en main mais avec des coûts élevés. L'<strong>open source</strong> permet de conserver le contrôle et de personnaliser les modèles, mais demande des compétences pointues en Data Science et DevOps.</p>
+        </section>
+
+        <section class="content-block reveal-right footer-conclusion">
+            <h2>Demain, une supervision qui pense avec nous</h2>
+            <p>Demain, avoir une infrastructure “intelligente” ne sera pas une option… Ce sera une attente de business. La question ne sera plus : « Est‑ce qu’on supervise ? » mais « À quel niveau la supervision est-elle augmentée par l’IA ? »</p>
+        </section>
+
+        <div class="back-footer">
+            <a href="index.html#veille" class="btn-back">← RETOUR AU PORTFOLIO</a>
+        </div>
+    </main>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) { entry.target.classList.add('active'); }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal-left, .reveal-right').forEach((el) => observer.observe(el));
+
+        window.onscroll = function() {
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            document.getElementById("myBar").style.width = (winScroll / height) * 100 + "%";
+        };
+    </script>
+</body>
+</html>
